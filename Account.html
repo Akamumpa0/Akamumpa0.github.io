@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account - Must Hospital</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="account.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <h2>Must Hospital</h2>
+                </div>
+                <nav class="nav">
+                    <ul class="nav-list">
+                        <li><a href="home.html" class="nav-link">Home</a></li>
+                        <li>
+                            <a href="#services" class="nav-link services">Services</a>
+                            <div class="submenu">
+                                <ul>
+                                    <li><a href="appointment.html" class="submenu-link">Appointment</a></li>
+                                    <li><a href="healthtrack.html" class="submenu-link">Healthtrack</a></li>
+                                    <li><a href="account.html" class="submenu-link active">Account</a></li>
+                                    <li><a href="Help.html" class="submenu-link">Help</a></li>
+                                    <li><a href="index.html" class="submenu-link">Logout</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li><a href="about.html" class="nav-link">About</a></li>
+                        <li><a href="Notifications.html" class="nav-link">Notifications</a></li>
+                        <li><a href="Diagnosis.html" class="nav-link">Diagnosis</a></li>
+                        <li><a href="Emergency.html" class="nav-link">Emergency</a></li>
+                    </ul>
+                </nav>
+               
+                <div class="mobile-menu-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Account Section -->
+    <section class="account">
+        <div class="container">
+            <div class="account-content">
+                <div class="account-text">
+                    <h1>Your Account</h1>
+                    <p>View and edit your personal information below. Upload a profile picture to personalize your account.</p>
+                </div>
+                <div class="account-form">
+                    <div class="profile-picture">
+                        <img id="profile-img" src="https://via.placeholder.com/150" alt="Profile Picture">
+                        <input type="file" id="profile-upload" accept="image/*">
+                        <button class="btn-primary upload-btn">Upload Picture</button>
+                    </div>
+                    <form id="account-form">
+                        <label for="name">Full Name:</label>
+                        <input type="text" id="name" name="name" required>
+                        <label for="age">Age:</label>
+                        <input type="number" id="age" name="age" min="1" required>
+                        <label for="birthday">Birthday:</label>
+                        <input type="date" id="birthday" name="birthday" required>
+                        <label for="status">Status:</label>
+                        <select id="status" name="status" required>
+                            <option value="Single">Single</option>
+                            <option value="Married">Married</option>
+                            <option value="Other">Other</option>
+                        </select>
+                        <label for="gender">Gender:</label>
+                        <select id="gender" name="gender" required>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                        <label for="residence">Area of Residence:</label>
+                        <input type="text" id="residence" name="residence" required>
+                        <label for="campus">Campus:</label>
+                        <input type="text" id="campus" name="campus" required>
+                        <label for="email">Email Address:</label>
+                        <input type="email" id="email" name="email" required>
+                        <label for="student-id">Student ID:</label>
+                        <input type="text" id="student-id" name="student-id" required>
+                        <label for="phone">Phone Number:</label>
+                        <input type="tel" id="phone" name="phone" required>
+                        <label for="district">District of Birth:</label>
+                        <input type="text" id="district" name="district" required>
+                        <button type="submit" class="btn-primary">Save Changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="account.js"></script>
+</body>
+</html>

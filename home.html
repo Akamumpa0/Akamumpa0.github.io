@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Must Hospital - Student Healthcare Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <h2>Must Hospital</h2>
+                </div>
+                <nav class="nav">
+                    <ul class="nav-list">
+                        <li><a href="home.html" class="nav-link active">Home</a></li>
+                        <li>
+                            <a href="#services" class="nav-link services">Services</a>
+                            <div class="submenu">
+                                <ul>
+                                    <li><a href="Appointment.html" class="submenu-link">Appointment</a></li>
+                                    <li><a href="Healthtrack.html" class="submenu-link">Healthtrack</a></li>
+                                    <li><a href="Account.html" class="submenu-link">Account</a></li>
+                                    <li><a href="Help.html" class="submenu-link">Help</a></li>
+                                    <li><a href="index.html" class="submenu-link">Logout</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li><a href="about.html" class="nav-link">About</a></li>
+                        <li><a href="Notifications.html" class="nav-link">Notifications</a></li>
+                        <li><a href="Diagnosis.html" class="nav-link">Diagnosis</a></li>
+                        <li><a href="Emergency.html" class="nav-link">Emergency</a></li>
+                    </ul>
+                </nav>
+                <!--<div class="auth-buttons">
+                    <button class="btn-login">Log In</button>
+                    <button class="btn-signup">Sign Up</button>
+                </div> -->
+                <div class="mobile-menu-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Get Medical Help Online Without Leaving Campus</h1>
+                    <p>Access professional healthcare guidance through our secure platform. Fill out medical forms, get preliminary assessments, and understand if your symptoms require immediate attention - all from the comfort of your dorm room.</p>
+                   <!---- <div class="hero-buttons">
+                        <button class="btn-primary">Get Started</button>
+                        <button class="btn-secondary">Learn More</button>
+                    </div> --->
+                    <div class="trust-indicators">
+                        <div class="trust-item">
+                            <div class="trust-icon">⚕️</div>
+                            <div class="trust-text">
+                                <span class="trust-number">24/7</span>
+                                <span class="trust-label">Available</span>
+                            </div>
+                        </div>
+                        <div class="trust-item">
+                            <div class="trust-icon">🔒</div>
+                            <div class="trust-text">
+                                <span class="trust-number">100%</span>
+                                <span class="trust-label">Secure</span>
+                            </div>
+                        </div>
+                        <div class="trust-item">
+                            <div class="trust-icon">👥</div>
+                            <div class="trust-text">
+                                <span class="trust-number">5000+</span>
+                                <span class="trust-label">Students Helped</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="floating-card card-1">
+                        <div class="card-icon">📋</div>
+                        <div class="card-content">
+                            <h4>Quick Assessment</h4>
+                            <p>Fill medical forms in minutes</p>
+                        </div>
+                    </div>
+                    <div class="floating-card card-2">
+                        <div class="card-icon">🏥</div>
+                        <div class="card-content">
+                            <h4>Professional Review</h4>
+                            <p>Healthcare experts analyze your symptoms</p>
+                        </div>
+                    </div>
+                    <div class="floating-card card-3">
+                        <div class="card-icon">✅</div>
+                        <div class="card-content">
+                            <h4>Get Results</h4>
+                            <p>Know if you need immediate care</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Mobile menu toggle
+const mobileToggle = document.getElementById('mobile-menu-toggle');
+const navList = document.getElementById('nav-list');
+
+mobileToggle.addEventListener('click', () => {
+    navList.classList.toggle('active');
+    mobileToggle.classList.toggle('active');
+});
+
+// Smooth scrolling for in-page navigation links and allow page navigation
+document.addEventListener('click', (e) => {
+    const link = e.target.closest('.nav-link, .submenu-link, .btn-primary');
+    if (link) {
+        const targetId = link.getAttribute('href');
+        // Allow navigation to other pages
+        if (targetId === 'home.html' || targetId === 'about.html' || targetId === 'Diagnosis.html' || targetId === 'Emergency.html' || targetId === 'Appointment.html' || targetId === 'Healthtrack.html' || targetId === 'Account.html' || targetId === 'Help.html' || targetId === 'Notifications.html' || targetId === 'logout.html') {
+            e.preventDefault();
+            window.location.href = targetId;
+            return;
+        }
+        // Handle in-page anchor links
+        if (targetId && targetId.startsWith('#')) {
+            e.preventDefault();
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                targetElement.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            } else {
+                // Fallback: scroll to top for non-existent anchors
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            }
+        }
+    }
+});
+
+// Add scroll effect to header
+window.addEventListener('scroll', () => {
+    const header = document.querySelector('.header');
+    if (window.scrollY > 100) {
+        header.classList.add('scrolled');
+    } else {
+        header.classList.remove('scrolled');
+    }
+});
+
+// Check login status (mock)
+document.addEventListener('DOMContentLoaded', () => {
+    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    if (!isLoggedIn) {
+        // Redirect to index.html if not logged in
+        window.location.href = 'index.html';
+    }
+
+    // Update notification badge
+    const notificationBadge = document.getElementById('notification-badge');
+    if (notificationBadge) {
+        const unreadCount = localStorage.getItem('unreadNotifications') || 0;
+        notificationBadge.textContent = unreadCount;
+    }
+});
+    </script>
+</body>
+</html>
