@@ -123,4 +123,78 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Start conversation
     askQuestion();
+
+    // Export diagnosis as PDF
+    const exportButton = document.getElementById('export-diagnosis-pdf');
+    if (exportButton) {
+        exportButton.addEventListener('click', () => {
+            const generatedAt = new Date();
+            const yyyy = generatedAt.getFullYear();
+            const mm = String(generatedAt.getMonth() + 1).padStart(2, '0');
+            const dd = String(generatedAt.getDate()).padStart(2, '0');
+            const hh = String(generatedAt.getHours()).padStart(2, '0');
+            const min = String(generatedAt.getMinutes()).padStart(2, '0');
+
+            const header = `Diagnosis Report`;
+            const filename = `diagnosis_report_${yyyy}${mm}${dd}_${hh}${min}.pdf`;
+
+            // Build content container
+            const container = document.createElement('div');
+            container.style.padding = '16px';
+            container.style.fontFamily = 'Roboto, Arial, sans-serif';
+
+            // Header
+            const headerHtml = `
+                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:16px;">
+                    <div>
+                        <div style="font-size:22px; font-weight:700;">Must Hospital</div>
+                        <div style="font-size:12px; color:#666;">AI Doctor - ${header}</div>
+                    </div>
+                    <div style="text-align:right; font-size:12px; color:#666;">
+                        <div>Generated: ${yyyy}-${mm}-${dd} ${hh}:${min}</div>
+                    </div>
+                </div>
+                <hr style="border:none; border-top:1px solid #e5e7eb; margin: 0 0 16px 0;" />
+            `;
+
+            // Symptoms summary
+            const symptomsSection = `
+                <div style="margin-bottom:12px;">
+                    <div style="font-size:16px; font-weight:600; margin-bottom:6px;">Symptoms Provided</div>
+                    ${symptoms.length ? `<ul style="margin:0; padding-left:18px; font-size:13px; color:#111;">${symptoms.map(s => `<li>${s}</li>`).join('')}</ul>` : '<div style="font-size:13px; color:#555;">No symptoms entered yet.</div>'}
+                </div>
+            `;
+
+            // Transcript
+            const transcriptItems = Array.from(chatMessages.children).map(node => {
+                const isAi = node.classList.contains('ai');
+                const speaker = isAi ? 'AI' : 'You';
+                const text = node.textContent || '';
+                return `<div style="margin:0 0 6px 0;"><span style="font-weight:600;">${speaker}:</span> ${text}</div>`;
+            }).join('');
+
+            const transcriptSection = `
+                <div style="margin-top:8px;">
+                    <div style="font-size:16px; font-weight:600; margin-bottom:6px;">Conversation Transcript</div>
+                    <div style="font-size:13px; color:#111; line-height:1.55;">${transcriptItems || '<div>No conversation yet.</div>'}</div>
+                </div>
+            `;
+
+            container.innerHTML = headerHtml + symptomsSection + transcriptSection;
+
+            const options = {
+                margin: 10,
+                filename,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, useCORS: true },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            if (typeof html2pdf === 'function') {
+                html2pdf().set(options).from(container).save();
+            } else {
+                alert('PDF generator not available. Please check your internet connection and try again.');
+            }
+        });
+    }
 });

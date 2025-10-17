@@ -93,13 +93,71 @@ document.addEventListener('DOMContentLoaded', () => {
             historyList.appendChild(historyEntry);
         });
 
-        // Add event listeners to download buttons
-        document.querySelectorAll('.download-btn').forEach(button => {
-            button.addEventListener('click', () => {
-                const file = button.getAttribute('data-file');
-                // Simulate download (frontend only)
-                console.log('Downloading lab test:', file);
-                alert(`Downloading ${file}. (Simulated - in real implementation, this would download the file.)`);
+        // Add event listeners to download buttons - generate PDF on the fly
+        document.querySelectorAll('.download-btn').forEach(downloadButton => {
+            downloadButton.addEventListener('click', () => {
+                const labReportFileName = downloadButton.getAttribute('data-file');
+
+                // Derive a friendly title from the file name
+                const baseName = labReportFileName.replace(/\.[^/.]+$/, '')
+                    .replace(/[_-]+/g, ' ')
+                    .replace(/\b\w/g, c => c.toUpperCase());
+
+                // Try to retrieve context from the UI card
+                const historyInfo = downloadButton.closest('.history-entry')?.querySelector('.history-info');
+                const headingText = historyInfo?.querySelector('h3')?.textContent || '';
+                const doctorLine = historyInfo?.querySelector('p')?.textContent || '';
+
+                const generatedAt = new Date();
+                const yyyy = generatedAt.getFullYear();
+                const mm = String(generatedAt.getMonth() + 1).padStart(2, '0');
+                const dd = String(generatedAt.getDate()).padStart(2, '0');
+                const hh = String(generatedAt.getHours()).padStart(2, '0');
+                const min = String(generatedAt.getMinutes()).padStart(2, '0');
+
+                const fileSafeTitle = baseName.toLowerCase().replace(/\s+/g, '_');
+                const pdfFilename = `${fileSafeTitle}_${yyyy}${mm}${dd}_${hh}${min}.pdf`;
+
+                // Build a lightweight HTML document for the PDF
+                const container = document.createElement('div');
+                container.style.padding = '16px';
+                container.style.fontFamily = 'Roboto, Arial, sans-serif';
+                container.innerHTML = `
+                    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:16px;">
+                        <div>
+                            <div style="font-size:22px; font-weight:700;">Must Hospital</div>
+                            <div style="font-size:12px; color:#666;">Health Track - Lab Test Report</div>
+                        </div>
+                        <div style="text-align:right; font-size:12px; color:#666;">
+                            <div>Generated: ${yyyy}-${mm}-${dd} ${hh}:${min}</div>
+                        </div>
+                    </div>
+                    <hr style="border:none; border-top:1px solid #e5e7eb; margin: 0 0 16px 0;" />
+                    <div style="margin-bottom:12px;">
+                        <div style="font-size:18px; font-weight:600; margin-bottom:4px;">${baseName}</div>
+                        ${headingText ? `<div style="font-size:13px; color:#444;">${headingText}</div>` : ''}
+                        ${doctorLine ? `<div style="font-size:13px; color:#444;">${doctorLine}</div>` : ''}
+                    </div>
+                    <div style="font-size:13px; color:#111; line-height:1.55;">
+                        <p style="margin: 0 0 8px 0;">This PDF is a generated copy of your selected lab test record from Health Track.</p>
+                        <p style="margin: 0 0 8px 0;">For official use, please verify details at Must Hospital. This document does not replace physician advice.</p>
+                    </div>
+                `;
+
+                const options = {
+                    margin:       10,
+                    filename:     pdfFilename,
+                    image:        { type: 'jpeg', quality: 0.98 },
+                    html2canvas:  { scale: 2, useCORS: true },
+                    jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                };
+
+                if (typeof html2pdf === 'function') {
+                    html2pdf().set(options).from(container).save();
+                } else {
+                    // Fallback in case CDN failed to load
+                    alert('PDF generator not available. Please check your internet connection and try again.');
+                }
             });
         });
     }
