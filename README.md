@@ -1,0 +1,1 @@
+This is a web based project designed and implemented by team 5 members. It is named Must E-Hospital, its basically an application that will enable University students, specifically at Must receive medical care without moving to the hospital. The application was built with HTML, CSS and JAVASCRIPT, It was later integrated with PHP for the backend, MySQL for the database.
