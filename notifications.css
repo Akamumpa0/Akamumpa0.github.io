@@ -1,0 +1,476 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body styling with Roboto font */
+body {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f4f7fa;
+    overflow-x: hidden;
+}
+
+/* Container for content */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Header Styles */
+.header {
+    background: rgba(255, 255, 255, 0.95);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Header when scrolled */
+.header.scrolled {
+    background: rgba(255, 255, 255, 0.98);
+    box-shadow: 0 2px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* Header content layout */
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 0;
+}
+
+/* Logo styling */
+.logo h2 {
+    color: #2B5A87;
+    font-weight: 700;
+    font-size: 1.8rem;
+}
+
+/* Navigation list */
+.nav-list {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+}
+
+/* Navigation links */
+.nav-link {
+    text-decoration: none;
+    color: #666;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+/* Hover and active state for nav links */
+.nav-link:hover,
+.nav-link.active {
+    color: #2B5A87;
+}
+
+/* Underline effect for nav links */
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #2B5A87;
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+    width: 100%;
+}
+
+/* Submenu Styles - DESKTOP */
+.nav-list li {
+    position: relative;
+}
+
+.nav-link.services::after {
+    content: '▼';
+    font-size: 0.7rem;
+    margin-left: 5px;
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+.nav-list li:hover .nav-link.services::after {
+    transform: rotate(180deg);
+}
+
+.submenu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    padding: 1rem;
+    min-width: 200px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+/* Show submenu on hover */
+.nav-list li:hover .submenu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.submenu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.submenu li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.submenu-link {
+    text-decoration: none;
+    color: #666;
+    font-weight: 400;
+    display: block;
+    padding: 0.5rem 0;
+    transition: color 0.3s ease;
+    white-space: nowrap;
+}
+
+.submenu-link:hover,
+.submenu-link.active {
+    color: #2B5A87;
+}
+
+/* Mobile menu toggle */
+.mobile-menu-toggle {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 4px;
+    padding: 8px;
+    background: transparent;
+    border: none;
+}
+
+.mobile-menu-toggle span {
+    width: 25px;
+    height: 3px;
+    background: #2B5A87;
+    transition: all 0.3s ease;
+    display: block;
+}
+
+.mobile-menu-toggle.active span:nth-child(1) {
+    transform: rotate(45deg) translate(6px, 6px);
+}
+
+.mobile-menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.mobile-menu-toggle.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
+}
+
+/* Notifications Section */
+.notifications {
+    padding: 100px 0 60px;
+    background-color: #f4f7fa;
+}
+
+/* Notifications content layout */
+.notifications-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Notifications heading */
+.notifications-text h1 {
+    font-size: 2.5rem;
+    color: #2B5A87;
+    margin-bottom: 1rem;
+}
+
+/* Notifications description */
+.notifications-text p {
+    font-size: 1.1rem;
+    color: #666;
+    margin-bottom: 1.5rem;
+}
+
+/* Notification list */
+.notifications-list {
+    margin-top: 20px;
+}
+
+/* Individual notification item */
+.notification-item {
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    transition: background-color 0.3s ease;
+}
+
+/* Unread notification styling */
+.notification-item.unread {
+    background-color: #e6f0ff;
+    border-left: 4px solid #2B5A87;
+}
+
+/* Read notification styling */
+.notification-item.read {
+    background-color: #f5f5f5;
+}
+
+/* Notification type heading */
+.notification-item h3 {
+    font-size: 1.2rem;
+    color: #2B5A87;
+    margin-bottom: 0.5rem;
+}
+
+/* Notification message */
+.notification-item p {
+    font-size: 1rem;
+    color: #333;
+}
+
+/* Notification timestamp */
+.notification-item small {
+    font-size: 0.8rem;
+    color: #999;
+}
+
+/* Error highlight for buttons */
+.error-highlight {
+    border: 2px solid #e74c3c;
+    background-color: #ffe6e6;
+}
+
+/* Button styling */
+.btn-primary, .btn-secondary {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+}
+
+/* Primary button (Mark All as Read) */
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+}
+
+/* Primary button hover */
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+/* Secondary button (Mark as Read) */
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+}
+
+/* Secondary button hover */
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+/* MOBILE STYLES */
+@media (max-width: 768px) {
+    /* Hide desktop nav */
+    .nav {
+        display: none;
+    }
+
+    /* Show mobile menu toggle */
+    .mobile-menu-toggle {
+        display: flex;
+    }
+
+    /* Mobile nav styles */
+    .nav.active {
+        display: block;
+        position: fixed;
+        top: 80px;
+        left: 0;
+        right: 0;
+        background: white;
+        z-index: 9999;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        padding: 0;
+        height: auto;
+        max-height: calc(100vh - 80px);
+        overflow-y: auto;
+    }
+
+    .nav-list {
+        display: none;
+        flex-direction: column;
+        padding: 1rem;
+        gap: 0;
+        margin: 0;
+        width: 100%;
+    }
+
+    .nav-list.active {
+        display: flex;
+    }
+
+    .nav-list li {
+        width: 100%;
+        border-bottom: 1px solid #f0f0f0;
+        margin: 0;
+        padding: 0;
+    }
+
+    .nav-list li:last-child {
+        border-bottom: none;
+    }
+
+    .nav-link {
+        display: block;
+        padding: 1rem;
+        width: 100%;
+        text-decoration: none;
+        color: #666;
+        font-weight: 500;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+        color: #2B5A87;
+        background: #f8f9fa;
+    }
+
+    /* Mobile submenu styles */
+    .submenu {
+        position: static;
+        box-shadow: none;
+        background: #F9F9F9;
+        border-radius: 0;
+        margin: 0;
+        padding: 0;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        display: block;
+        width: 100%;
+    }
+
+    .submenu.active {
+        max-height: 500px;
+        padding: 0;
+    }
+
+    .nav-link.services {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .nav-link.services::after {
+        content: '▼';
+        font-size: 0.7rem;
+        display: inline-block;
+        transition: transform 0.3s ease;
+    }
+
+    .nav-link.services.active::after {
+        transform: rotate(180deg);
+    }
+
+    .submenu ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        width: 100%;
+    }
+
+    .submenu li {
+        list-style: none;
+        border-bottom: none;
+        width: 100%;
+    }
+
+    .submenu-link {
+        display: block;
+        padding: 0.8rem 1.5rem 0.8rem 2rem;
+        color: #666;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        border-left: 3px solid transparent;
+        font-size: 0.9rem;
+        width: 100%;
+    }
+
+    .submenu-link:hover {
+        background: #E8F4FD;
+        color: #2B5A87;
+        border-left-color: #2B5A87;
+    }
+
+    /* Adjust notifications padding for mobile */
+    .notifications {
+        padding: 80px 0 40px;
+    }
+
+    /* Smaller heading for mobile */
+    .notifications-text h1 {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Smaller container padding */
+    .container {
+        padding: 0 15px;
+    }
+
+    /* Smaller logo */
+    .logo h2 {
+        font-size: 1.5rem;
+    }
+
+    /* Smaller notification heading */
+    .notifications-text h1 {
+        font-size: 1.8rem;
+    }
+
+    /* Smaller notification text */
+    .notifications-text p {
+        font-size: 1rem;
+    }
+
+    /* Stack notification item content */
+    .notification-item {
+        padding: 10px;
+    }
+}

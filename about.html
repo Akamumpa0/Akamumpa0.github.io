@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About MUST E-Hospital - Student Healthcare Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="about.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <h2>MUST E-Hospital</h2>
+                </div>
+                <nav class="nav">
+                    <ul class="nav-list">
+                        <li><a href="home.php" class="nav-link">Home</a></li>
+                        <li>
+                            <a href="#services" class="nav-link services">Services</a>
+                            <div class="submenu">
+                                <ul>
+                                    <li><a href="Appointment.php" class="submenu-link">Appointment</a></li>
+                                    <li><a href="Healthtrack.php" class="submenu-link">Healthtrack</a></li>
+                                    <li><a href="Account.php" class="submenu-link">Account</a></li>
+                                    <li><a href="Help.html" class="submenu-link">Help</a></li>
+                                    <li><a href="includes/logout.inc.php" class="submenu-link">Logout</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li><a href="about.html" class="nav-link active">About</a></li>
+                        <li><a href="Notifications.php" class="nav-link">Notifications</a></li>
+                        <li><a href="Diagnosis.php" class="nav-link">Diagnosis</a></li>
+                        <li><a href="Emergency.php" class="nav-link">Emergency</a></li>
+                    </ul>
+                </nav>
+               
+                <div class="mobile-menu-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- About Section -->
+    <section class="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h1>About MUST E-Hospital</h1>
+                    <p>MUST E-Hospital is a dedicated healthcare platform designed for university students, providing accessible, secure, and efficient medical services from anywhere on campus. Our mission is to empower students to manage their health with confidence, offering tools for symptom assessment, appointment scheduling, and health tracking, all backed by professional medical expertise.</p>
+                    <div class="about-mission">
+                        <h3>Our Mission</h3>
+                        <p>We aim to bridge the gap between students and healthcare by providing a user-friendly platform that delivers timely medical guidance, ensuring no student has to navigate health challenges alone.</p>
+                    </div>
+                    <div class="about-team">
+                        <h3>Our Team</h3>
+                        <p>Our team consists of experienced healthcare professionals, tech innovators, and student advocates who work together to create a seamless and supportive healthcare experience tailored to the unique needs of university life.</p>
+                    </div>
+                    <div class="about-values">
+                        <h3>Our Values</h3>
+                        <ul>
+                            <li><strong>Accessibility:</strong> Healthcare available 24/7, wherever you are.</li>
+                            <li><strong>Security:</strong> Your data is protected with state-of-the-art encryption.</li>
+                            <li><strong>Empowerment:</strong> Equipping students with tools to take charge of their health.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="about-visual">
+                    <div class="about-card">
+                        <div class="card-icon">🏥</div>
+                        <div class="card-content">
+                            <h4>Student-Centric Care</h4>
+                            <p>Designed with university students in mind, addressing their unique health needs.</p>
+                        </div>
+                    </div>
+                    <div class="about-card">
+                        <div class="card-icon">🩺</div>
+                        <div class="card-content">
+                            <h4>Expert Guidance</h4>
+                            <p>Connect with certified medical professionals for reliable advice.</p>
+                        </div>
+                    </div>
+                    <div class="about-card">
+                        <div class="card-icon">📱</div>
+                        <div class="card-content">
+                            <h4>Seamless Technology</h4>
+                            <p>Easy-to-use platform accessible on any device.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Mobile menu functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+            const nav = document.querySelector('.nav');
+            const navList = document.querySelector('.nav-list');
+            const serviceLinks = document.querySelectorAll('.nav-link.services');
+
+            console.log('About page mobile menu elements:', { mobileMenuToggle: !!mobileMenuToggle, nav: !!nav, navList: !!navList });
+
+            // Only initialize once across all pages/scripts
+            if (mobileMenuToggle && nav && navList) {
+                if (document.body.dataset.mobileMenuInit) {
+                    console.log('Mobile menu already initialized by another script - skipping about.html init');
+                } else {
+                    document.body.dataset.mobileMenuInit = '1';
+
+                    // Toggle main mobile menu
+                    mobileMenuToggle.addEventListener('click', function(e) {
+                        // Prevent other document click handlers from running and closing the menu immediately
+                        e.stopPropagation();
+                        e.stopImmediatePropagation();
+                        console.log('About: mobile menu toggle clicked');
+                        this.classList.toggle('active');
+                        nav.classList.toggle('active');
+                        navList.classList.toggle('active');
+
+                        // Track open state on body so other scripts can check it
+                        document.body.classList.toggle('menu-open');
+
+                        // Close all submenus when closing main menu
+                        if (!navList.classList.contains('active')) {
+                            closeAllSubmenus();
+                        }
+                    });
+
+                    // Toggle submenus on mobile
+                    serviceLinks.forEach(link => {
+                        link.addEventListener('click', function(e) {
+                            if (window.innerWidth <= 768) {
+                                e.preventDefault();
+                                // Block other click handlers to avoid race conditions
+                                e.stopPropagation();
+                                e.stopImmediatePropagation();
+                                console.log('About: Services link clicked on mobile');
+                                const submenu = this.nextElementSibling;
+
+                                // Close other open submenus
+                                closeOtherSubmenus(submenu);
+
+                                // Toggle current submenu
+                                this.classList.toggle('active');
+                                if (submenu && submenu.classList.contains('submenu')) {
+                                    submenu.classList.toggle('active');
+                                }
+                            }
+                        });
+                    });
+
+                    // Close menu when clicking outside on mobile (only when menu is actually open)
+                    document.addEventListener('click', function(e) {
+                        if (window.innerWidth <= 768 &&
+                            document.body.classList.contains('menu-open') &&
+                            !e.target.closest('.nav') &&
+                            !e.target.closest('.mobile-menu-toggle')) {
+                            console.log('About: Click outside - closing mobile menu');
+                            closeMobileMenu();
+                        }
+                    });
+
+                    // Navigation handling
+                    document.addEventListener('click', function(e) {
+                        const link = e.target.closest('.nav-link, .submenu-link');
+                        if (link) {
+                            const targetUrl = link.getAttribute('href');
+
+                            // Handle logout separately
+                            if (targetUrl === 'includes/logout.inc.php') {
+                                e.preventDefault();
+                                window.location.href = targetUrl;
+                                return;
+                            }
+
+                            // Close mobile menu when navigating (except for services dropdown) but only if menu is open
+                            if (window.innerWidth <= 768 && document.body.classList.contains('menu-open') && !link.classList.contains('services')) {
+                                closeMobileMenu();
+                            }
+                        }
+                    });
+
+                    // Close menu function
+                    function closeMobileMenu() {
+                        if (mobileMenuToggle) mobileMenuToggle.classList.remove('active');
+                        if (nav) nav.classList.remove('active');
+                        if (navList) navList.classList.remove('active');
+                        // Remove the open-state marker
+                        document.body.classList.remove('menu-open');
+                        closeAllSubmenus();
+                    }
+
+                    // Close all submenus function
+                    function closeAllSubmenus() {
+                        document.querySelectorAll('.submenu').forEach(submenu => {
+                            submenu.classList.remove('active');
+                        });
+                        document.querySelectorAll('.nav-link.services').forEach(link => {
+                            link.classList.remove('active');
+                        });
+                    }
+
+                    // Close other submenus function
+                    function closeOtherSubmenus(currentSubmenu) {
+                        document.querySelectorAll('.submenu').forEach(menu => {
+                            if (menu !== currentSubmenu) {
+                                menu.classList.remove('active');
+                            }
+                        });
+                        document.querySelectorAll('.nav-link.services').forEach(menuLink => {
+                            if (menuLink.nextElementSibling !== currentSubmenu) {
+                                menuLink.classList.remove('active');
+                            }
+                        });
+                    }
+                }
+            } else {
+                console.log('About: No mobile menu found in DOM for this page - leaving menu init to page-specific scripts.');
+            }
+
+            // Header scroll effect (unchanged)
+            window.addEventListener('scroll', function() {
+                const header = document.querySelector('.header');
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

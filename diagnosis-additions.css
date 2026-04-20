@@ -1,0 +1,76 @@
+/* ── Paste these additions at the bottom of your diagnosis.css ── */
+
+/* Chat bubbles */
+.message {
+    margin-bottom: 1rem;
+    padding: 0.75rem 1rem;
+    border-radius: 12px;
+    max-width: 85%;
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+.message.ai {
+    background: #EBF4FB;
+    color: #1E4166;
+    font-weight: 400;
+    border-radius: 12px 12px 12px 0;
+    align-self: flex-start;
+}
+
+.message.user {
+    background: #2B5A87;
+    color: white;
+    text-align: left;
+    border-radius: 12px 12px 0 12px;
+    margin-left: auto;
+}
+
+/* Severe warning style */
+.message.ai.severe {
+    background: #FFF3CD;
+    border-left: 4px solid #FF4444;
+    color: #7B2D00;
+}
+
+/* Make chat messages a flex column */
+.chat-messages {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Typing indicator */
+.typing-indicator {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 0.75rem 1rem;
+    background: #EBF4FB;
+    border-radius: 12px 12px 12px 0;
+    width: fit-content;
+    max-width: 80px;
+}
+
+.typing-indicator span {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: #2B5A87;
+    border-radius: 50%;
+    animation: typingBounce 1.2s infinite ease-in-out;
+}
+
+.typing-indicator span:nth-child(1) { animation-delay: 0s; }
+.typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+.typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes typingBounce {
+    0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+    30%            { transform: translateY(-6px); opacity: 1; }
+}
+
+/* Disabled input state */
+.chat-input input:disabled {
+    background: #f5f5f5;
+    cursor: not-allowed;
+}
